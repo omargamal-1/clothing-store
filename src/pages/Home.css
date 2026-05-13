@@ -1,0 +1,170 @@
+.home {}
+
+/* Hero */
+.hero {
+  height: 88vh;
+  min-height: 520px;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: flex-end;
+  position: relative;
+}
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.1) 60%);
+}
+.hero-content {
+  position: relative;
+  z-index: 1;
+  padding: 0 48px 64px;
+  color: #fff;
+}
+.hero-headline {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 6vw, 72px);
+  font-weight: 300;
+  letter-spacing: 2px;
+  line-height: 1.1;
+  margin-bottom: 12px;
+}
+.hero-sub {
+  font-size: 15px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  opacity: 0.85;
+  margin-bottom: 28px;
+}
+.hero-btns {
+  display: flex;
+  gap: 12px;
+}
+.hero-btn {
+  background: #fff;
+  color: #111;
+  border: none;
+  padding: 12px 28px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.hero-btn:hover { background: #111; color: #fff; }
+.hero-btn--outline {
+  background: transparent;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.7);
+}
+.hero-btn--outline:hover { background: #fff; color: #111; }
+
+/* Gender banners */
+.gender-banners {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 40px auto;
+}
+.gender-banner {
+  height: 120px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s, transform 0.2s;
+  overflow: hidden;
+  position: relative;
+}
+.gender-banner:hover { transform: translateY(-2px); opacity: 0.92; }
+.gender-banner--boys {
+  background: linear-gradient(135deg, #1a2a4a 0%, #3b6ea5 100%);
+  color: #fff;
+}
+.gender-banner--girls {
+  background: linear-gradient(135deg, #b5606a 0%, #f5aab3 100%);
+  color: #fff;
+}
+.gender-banner-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.gender-banner-label {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 300;
+  letter-spacing: 3px;
+}
+.gender-banner-cta {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+/* Sections */
+.home-section {
+  padding: 40px 0;
+  animation: fadeUp 0.4s ease;
+}
+.section-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.section-title {
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #111;
+}
+.girls-title { color: #b5606a; }
+.section-link {
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #888;
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.section-link:hover { color: #111; }
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+/* Shop all */
+.home-shop-all {
+  text-align: center;
+  padding: 32px 0 64px;
+}
+.shop-all-btn {
+  display: inline-block;
+  border: 1px solid #111;
+  padding: 12px 40px;
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: #111;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+}
+.shop-all-btn:hover { background: #111; color: #fff; }
+
+@media (max-width: 768px) {
+  .hero-content { padding: 0 24px 48px; }
+  .products-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .gender-banners { gap: 8px; }
+  .gender-banner { height: 90px; }
+  .gender-banner-label { font-size: 22px; }
+}
