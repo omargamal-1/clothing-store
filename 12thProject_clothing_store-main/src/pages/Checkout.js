@@ -5,8 +5,17 @@ import { db } from '../firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import './Checkout.css';
 
-const OWNER_WHATSAPP  = '201227933409';
+const OWNER_WHATSAPP   = '201227933409';
 const CALLMEBOT_APIKEY = '8080033';
+
+// ── كوبونات الخصم ─────────────────────────────────────────────
+const COUPONS = {
+  'SNOW10':  { type: 'percent', value: 10,  label: '10% OFF' },
+  'SNOW20':  { type: 'percent', value: 20,  label: '20% OFF' },
+  'SNOW50':  { type: 'fixed',   value: 50,  label: 'LE 50 OFF' },
+  'WELCOME': { type: 'percent', value: 15,  label: '15% OFF' },
+  'FREESHIP':{ type: 'ship',    value: 0,   label: 'Free Shipping' },
+};
 
 const SHIPPING_OPTIONS = [
   { id: 'standard', label: 'Standard Delivery', desc: '3–5 business days',         price: 45,  icon: '📦', color: '#3b6ea5' },
@@ -32,10 +41,62 @@ export default function Checkout() {
     address:'', city:'', postalCode:'',
   });
 
+  // ── Coupon state ───────────────────────────────────────────
+  const [couponInput,   setCouponInput]   = useState('');
+  const [appliedCoupon, setAppliedCoupon] = useState(null);
+  const [couponError,   setCouponError]   = useState('');
+  const [couponSuccess, setCouponSuccess] = useState('');
+
   const selectedShipping = SHIPPING_OPTIONS.find(o => o.id === shipping);
   const shippingCost     = selectedShipping?.price ?? 0;
-  const grandTotal       = totalPrice + shippingCost;
-  const handleChange     = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+
+  // ── حساب الخصم ────────────────────────────────────────────
+  const calcDiscount = () => {
+    if (!appliedCoupon) return 0;
+    if (appliedCoupon.type === 'percent') return (totalPrice * appliedCoupon.value) / 100;
+    if (appliedCoupon.type === 'fixed')   return appliedCoupon.value;
+    if (appliedCoupon.type === 'ship')    return shippingCost;
+    return 0;
+  };
+
+  const discount      = calcDiscount();
+  const finalShipping = appliedCoupon?.type === 'ship' ? 0 : shippingCost;
+  const grandTotal    = Math.max(0, totalPrice - (appliedCoupon?.type === 'ship' ? 0 : discount) + finalShipping);
+
+  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+
+  // ── Apply Coupon ───────────────────────────────────────────
+  const applyCoupon = () => {
+    const code = couponInput.trim().toUpperCase();
+    setCouponError('');
+    setCouponSuccess('');
+
+    if (!code) { setCouponError('Please enter a coupon code.'); return; }
+
+    // ── تحقق إن الكوبون اتكسب من العجلة ──
+    const wonCoupon = localStorage.getItem('sw_won_coupon');
+    if (!wonCoupon || wonCoupon.toUpperCase() !== code) {
+      setCouponError('🎡 This coupon is only for Spin & Win winners!');
+      setAppliedCoupon(null);
+      return;
+    }
+
+    const found = COUPONS[code];
+    if (!found) { setCouponError('Invalid coupon code.'); setAppliedCoupon(null); return; }
+
+    setAppliedCoupon({ ...found, code });
+    setCouponSuccess(`🎉 Coupon applied! You got ${found.label}`);
+
+    // ── امسح الكوبون بعد الاستخدام ──
+    localStorage.removeItem('sw_won_coupon');
+  };
+
+  const removeCoupon = () => {
+    setAppliedCoupon(null);
+    setCouponInput('');
+    setCouponError('');
+    setCouponSuccess('');
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -44,8 +105,9 @@ export default function Checkout() {
     const orderData = {
       customer:  { ...form },
       items:     items.map(i => ({ id:i.id, name:i.name, price:i.price, qty:i.qty, image:i.image||'' })),
-      shipping:  { method: selectedShipping?.label, cost: shippingCost },
+      shipping:  { method: selectedShipping?.label, cost: finalShipping },
       payment,
+      coupon:    appliedCoupon ? { code: appliedCoupon.code, discount } : null,
       totalPrice,
       grandTotal,
       status:    'pending',
@@ -53,10 +115,8 @@ export default function Checkout() {
     };
 
     try {
-      // 1. احفظ في Firebase
       await addDoc(collection(db, 'orders'), orderData);
 
-      // 2. جهّز رسالة الواتساب
       const itemsList = items
         .map(i => `* ${i.name} x${i.qty} - LE ${(i.price * i.qty).toFixed(2)}`)
         .join(' | ');
@@ -67,16 +127,21 @@ export default function Checkout() {
         `📞 ${form.phone}`,
         `📍 ${form.address}، ${form.city}`,
         `🧾 ${itemsList}`,
-        `🚚 ${selectedShipping?.label} - LE ${shippingCost}`,
+        appliedCoupon ? `🎟️ كوبون: ${appliedCoupon.code} (-LE ${discount.toFixed(2)})` : '',
+        `🚚 ${selectedShipping?.label} - LE ${finalShipping}`,
         `💳 ${PAYMENT_OPTIONS.find(p=>p.id===payment)?.label}`,
         `💰 الاجمالي: LE ${grandTotal.toFixed(2)} EGP`,
-      ].join(' | ');
+      ].filter(Boolean).join(' | ');
 
       const encodedMsg = encodeURIComponent(msgText);
 
-      // 3. ابعت واتساب عن طريق CallMeBot
-      new Image().src = `https://api.callmebot.com/whatsapp.php?phone=${OWNER_WHATSAPP}&text=${encodedMsg}&apikey=${CALLMEBOT_APIKEY}`;
-      await new Promise(r => setTimeout(r, 1000));
+      await new Promise((resolve) => {
+        const img = new Image();
+        img.onload = resolve;
+        img.onerror = resolve;
+        img.src = `https://api.callmebot.com/whatsapp.php?phone=${OWNER_WHATSAPP}&text=${encodedMsg}&apikey=${CALLMEBOT_APIKEY}`;
+        setTimeout(resolve, 3000);
+      });
 
       clearCart();
       setSubmitted(true);
@@ -111,6 +176,7 @@ export default function Checkout() {
       <div className="checkout-grid">
         <form className="checkout-form" onSubmit={handleSubmit}>
 
+          {/* 1. Shipping Info */}
           <section className="checkout-section">
             <h3 className="checkout-section-title"><span className="step-num">1</span> Shipping Information</h3>
             <div className="form-row">
@@ -126,6 +192,7 @@ export default function Checkout() {
             </div>
           </section>
 
+          {/* 2. Delivery */}
           <section className="checkout-section">
             <h3 className="checkout-section-title"><span className="step-num">2</span> Delivery Method</h3>
             <div className="shipping-options">
@@ -141,6 +208,7 @@ export default function Checkout() {
             </div>
           </section>
 
+          {/* 3. Payment */}
           <section className="checkout-section">
             <h3 className="checkout-section-title"><span className="step-num">3</span> Payment Method</h3>
             <div className="payment-options">
@@ -156,11 +224,37 @@ export default function Checkout() {
             {payment==='instapay' && <div className="instapay-note">📲 You'll receive an InstaPay request after placing the order.</div>}
           </section>
 
+          {/* 4. Coupon */}
+          <section className="checkout-section">
+            <h3 className="checkout-section-title"><span className="step-num">4</span> Coupon Code</h3>
+            {!appliedCoupon ? (
+              <div className="coupon-row">
+                <input
+                  className="coupon-input"
+                  type="text"
+                  placeholder="Enter coupon code e.g. SNOW10"
+                  value={couponInput}
+                  onChange={e => { setCouponInput(e.target.value); setCouponError(''); }}
+                  onKeyDown={e => e.key === 'Enter' && (e.preventDefault(), applyCoupon())}
+                />
+                <button type="button" className="coupon-btn" onClick={applyCoupon}>Apply</button>
+              </div>
+            ) : (
+              <div className="coupon-applied">
+                <span>🎟️ <strong>{appliedCoupon.code}</strong> — {appliedCoupon.label}</span>
+                <button type="button" className="coupon-remove" onClick={removeCoupon}>✕ Remove</button>
+              </div>
+            )}
+            {couponError   && <p className="coupon-error">❌ {couponError}</p>}
+            {couponSuccess && <p className="coupon-success">{couponSuccess}</p>}
+          </section>
+
           <button type="submit" className="place-order-btn" disabled={loading}>
             {loading ? 'Placing Order…' : `Place Order · LE ${grandTotal.toFixed(2)} EGP`}
           </button>
         </form>
 
+        {/* Order Summary */}
         <div className="order-summary">
           <h3>Order Summary</h3>
           <div className="summary-items">
@@ -174,7 +268,19 @@ export default function Checkout() {
           </div>
           <div className="summary-breakdown">
             <div className="summary-row"><span>Subtotal</span><span>LE {totalPrice.toFixed(2)}</span></div>
-            <div className="summary-row"><span>Shipping</span><span>{shippingCost===0?'Free':`LE ${shippingCost}`}</span></div>
+            <div className="summary-row"><span>Shipping</span><span>{finalShipping===0?'Free':`LE ${finalShipping}`}</span></div>
+            {appliedCoupon && appliedCoupon.type !== 'ship' && (
+              <div className="summary-row coupon-discount-row">
+                <span>🎟️ Discount ({appliedCoupon.code})</span>
+                <span>- LE {discount.toFixed(2)}</span>
+              </div>
+            )}
+            {appliedCoupon && appliedCoupon.type === 'ship' && (
+              <div className="summary-row coupon-discount-row">
+                <span>🎟️ Free Shipping ({appliedCoupon.code})</span>
+                <span>- LE {shippingCost.toFixed(2)}</span>
+              </div>
+            )}
             <div className="summary-total summary-row"><span>Total</span><span>LE {grandTotal.toFixed(2)} EGP</span></div>
           </div>
           <div className="trust-badges">
