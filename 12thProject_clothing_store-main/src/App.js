@@ -2,6 +2,8 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { CartProvider } from './context/CartContext';
 import Navbar from './components/Navbar';
+import { WishlistProvider } from './context/WishlistContext';
+import WishlistPage from './pages/WishlistPage';
 import Footer from './components/Footer';
 import Home from './pages/Home';
 import Shop from './pages/Shop';
@@ -14,6 +16,7 @@ import SpinWheel from './components/SpinWheel';
 function App() {
   return (
     <CartProvider>
+      <WishlistProvider>
       <BrowserRouter>
         <Navbar />
         <Routes>
@@ -23,11 +26,15 @@ function App() {
           <Route path="/checkout"   element={<Checkout />} />
           <Route path="/product/:id" element={<ProductPage />} />
           <Route path="/dashboard"  element={<Dashboard />} />
+          <Route path="/dashboard"  element={<Dashboard />} />
+          <Route path="/wishlist" element={<WishlistPage />} />
         </Routes>
         <Footer />
         <SpinWheel />
       </BrowserRouter>
+      </WishlistProvider>
     </CartProvider>
+    
   );
 }
 

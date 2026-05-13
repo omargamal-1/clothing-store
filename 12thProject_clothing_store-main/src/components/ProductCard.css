@@ -8,7 +8,9 @@
   overflow: hidden;
   transition: box-shadow 0.2s, transform 0.2s;
 }
-
+.product-card-img-wrap {
+  position: relative;
+}
 .product-card:hover {
   box-shadow: var(--shadow);
   transform: translateY(-2px);
