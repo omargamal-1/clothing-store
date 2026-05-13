@@ -1,3 +1,4 @@
+import Reviews from '../components/Reviews';
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import products from '../data/products';
@@ -68,6 +69,7 @@ export default function ProductPage() {
           <p className="detail-tag">Stay Cool. Stay Snow.</p>
         </div>
       </div>
+      <Reviews productId={product.id} />
     </div>
   );
 }
