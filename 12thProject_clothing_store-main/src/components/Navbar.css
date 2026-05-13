@@ -6,17 +6,6 @@
   height: var(--navbar-height);
   box-shadow: 0 2px 8px rgba(0,0,0,0.12);
 }
-.navbar-link {
-  font-size: 13px;
-  color: #111;
-  text-decoration: none;
-  letter-spacing: 0.5px;
-  white-space: nowrap;
-}
-
-.navbar-link:hover {
-  text-decoration: underline;
-}
 
 .navbar-inner {
   display: flex;
