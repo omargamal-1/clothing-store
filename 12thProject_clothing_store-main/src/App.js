@@ -1,9 +1,8 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { CartProvider } from './context/CartContext';
-import Navbar from './components/Navbar';
 import { WishlistProvider } from './context/WishlistContext';
-import WishlistPage from './pages/WishlistPage';
+import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
 import Shop from './pages/Shop';
@@ -11,6 +10,8 @@ import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
 import ProductPage from './pages/ProductPage';
 import Dashboard from './pages/Dashboard';
+import WishlistPage from './pages/WishlistPage';
+import OrderTracking from './pages/OrderTracking';
 import SpinWheel from './components/SpinWheel';
 
 function App() {
@@ -26,7 +27,7 @@ function App() {
           <Route path="/checkout"   element={<Checkout />} />
           <Route path="/product/:id" element={<ProductPage />} />
           <Route path="/dashboard"  element={<Dashboard />} />
-          <Route path="/dashboard"  element={<Dashboard />} />
+          <Route path="/order-tracking" element={<OrderTracking />} />
           <Route path="/wishlist" element={<WishlistPage />} />
         </Routes>
         <Footer />
