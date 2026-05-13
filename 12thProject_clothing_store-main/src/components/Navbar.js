@@ -35,7 +35,9 @@ export default function Navbar() {
         </Link>
 
         {/* Right: search + cart */}
-        <div className="navbar-right">
+<div className="navbar-right">
+  <Link to="/order-tracking" className="navbar-link">Track Order</Link>
+  <Link to="/wishlist" className="navbar-link">Wishlist ❤️</Link>
           <form onSubmit={handleSearch} className="navbar-search">
             <input
               type="text"
@@ -61,6 +63,7 @@ export default function Navbar() {
           <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link>
           <Link to="/shop" onClick={() => setMenuOpen(false)}>Shop</Link>
           <Link to="/cart" onClick={() => setMenuOpen(false)}>Cart</Link>
+          <Link to="/order-tracking">Track Order</Link>
           <Link to="/wishlist">Wishlist ❤️</Link>
         </div>
       )}
