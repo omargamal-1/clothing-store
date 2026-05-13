@@ -1,0 +1,29 @@
+.reviews-section { margin-top: 64px; border-top: 1px solid #eee; padding-top: 48px; }
+.reviews-header { display: flex; align-items: center; gap: 24px; margin-bottom: 32px; flex-wrap: wrap; }
+.reviews-title { font-size: 18px; font-weight: 500; color: #111; margin: 0; }
+.reviews-avg { display: flex; align-items: center; gap: 8px; }
+.avg-number { font-size: 22px; font-weight: 600; color: #111; }
+.avg-stars { display: flex; gap: 2px; }
+.avg-count { font-size: 13px; color: #888; }
+.star { font-size: 20px; color: #ddd; cursor: pointer; transition: color 0.15s; user-select: none; }
+.star.filled { color: #f5a623; }
+.star-picker .star:hover { transform: scale(1.2); }
+.review-form { background: #fafafa; border: 1px solid #eee; border-radius: 8px; padding: 28px; margin-bottom: 36px; }
+.form-title { font-size: 14px; font-weight: 600; color: #111; margin: 0 0 16px; text-transform: uppercase; letter-spacing: 0.5px; }
+.star-picker { display: flex; align-items: center; gap: 4px; margin-bottom: 16px; }
+.rating-label { font-size: 13px; color: #888; margin-left: 8px; }
+.review-input, .review-textarea { width: 100%; border: 1px solid #ddd; border-radius: 4px; padding: 10px 14px; font-size: 14px; color: #111; background: #fff; margin-bottom: 12px; box-sizing: border-box; resize: vertical; }
+.review-input:focus, .review-textarea:focus { outline: none; border-color: #111; }
+.review-submit { background: #111; color: #fff; border: none; padding: 11px 28px; font-size: 13px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; border-radius: 2px; cursor: pointer; }
+.review-submit:hover:not(:disabled) { background: #333; }
+.review-submit:disabled { opacity: 0.4; cursor: not-allowed; }
+.no-reviews { font-size: 14px; color: #aaa; text-align: center; padding: 32px 0; }
+.reviews-list { display: flex; flex-direction: column; gap: 20px; }
+.review-card { border: 1px solid #eee; border-radius: 8px; padding: 20px 24px; background: #fff; }
+.review-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.07); }
+.review-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+.review-stars { display: flex; gap: 2px; }
+.review-stars .star { font-size: 16px; cursor: default; }
+.review-date { font-size: 12px; color: #aaa; }
+.review-name { font-size: 14px; font-weight: 600; color: #111; margin: 0 0 6px; }
+.review-comment { font-size: 14px; color: #555; line-height: 1.6; margin: 0; }
