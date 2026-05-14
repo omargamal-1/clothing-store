@@ -55,16 +55,16 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile dropdown menu */}
-      {menuOpen && (
-        <div className="navbar-dropdown">
-          <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link>
-          <Link to="/shop" onClick={() => setMenuOpen(false)}>Shop</Link>
-          <Link to="/cart" onClick={() => setMenuOpen(false)}>Cart</Link>
-          <Link to="/wishlist">Wishlist ❤️</Link>
-          <Link to="/order-tracking" className="navbar-link">Track Order</Link>
-        </div>
-      )}
+  {/* Mobile dropdown menu */}
+{menuOpen && (
+  <div className="navbar-dropdown">
+    <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link>
+    <Link to="/shop" onClick={() => setMenuOpen(false)}>Shop</Link>
+    <Link to="/cart" onClick={() => setMenuOpen(false)}>Cart</Link>
+    <Link to="/wishlist" onClick={() => setMenuOpen(false)}>Wishlist ❤️</Link>
+    <Link to="/order-tracking" onClick={() => setMenuOpen(false)}>Track Order</Link>
+  </div>
+)}
     </nav>
   );
 }

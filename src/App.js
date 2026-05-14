@@ -4,6 +4,7 @@ import { CartProvider } from './context/CartContext';
 import Navbar from './components/Navbar';
 import { WishlistProvider } from './context/WishlistContext';
 import WishlistPage from './pages/WishlistPage';
+import OrderTracking from './pages/OrderTracking';
 import Footer from './components/Footer';
 import Home from './pages/Home';
 import Shop from './pages/Shop';
@@ -28,6 +29,7 @@ function App() {
           <Route path="/dashboard"  element={<Dashboard />} />
           <Route path="/dashboard"  element={<Dashboard />} />
           <Route path="/wishlist" element={<WishlistPage />} />
+          <Route path="/order-tracking" element={<OrderTracking />} />
         </Routes>
         <Footer />
         <SpinWheel />
