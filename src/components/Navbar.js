@@ -61,8 +61,8 @@ export default function Navbar() {
           <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link>
           <Link to="/shop" onClick={() => setMenuOpen(false)}>Shop</Link>
           <Link to="/cart" onClick={() => setMenuOpen(false)}>Cart</Link>
-          <Link to="/order-tracking" className="navbar-link">Track Order</Link>
           <Link to="/wishlist">Wishlist ❤️</Link>
+          <Link to="/order-tracking" className="navbar-link">Track Order</Link>
         </div>
       )}
     </nav>
