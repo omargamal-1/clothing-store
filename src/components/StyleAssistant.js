@@ -128,7 +128,7 @@ export default function StyleAssistant() {
             <div className="sa-pfp">✨</div>
             <div>
               <h4>SNOW AI</h4>
-              <small>• Active & Styling</small>
+              <p className="sa-online-status">Active & Styling</p>
             </div>
           </div>
           <button className="sa-close" onClick={() => setIsOpen(false)}>✕</button>
