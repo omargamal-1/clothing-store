@@ -1,10 +1,10 @@
-import React, { createContext, useContext, useReducer } from 'react';
+import React, { createContext, useContext, useReducer, useEffect } from 'react';
 
 const CartContext = createContext();
 
 const cartReducer = (state, action) => {
   switch (action.type) {
-    case 'ADD_ITEM': {
+    case 'ADD_TO_CART': {
       const existing = state.items.find(i => i.id === action.payload.id);
       if (existing) {
         return {
@@ -33,9 +33,16 @@ const cartReducer = (state, action) => {
 };
 
 export function CartProvider({ children }) {
-  const [state, dispatch] = useReducer(cartReducer, { items: [] });
+  const [state, dispatch] = useReducer(cartReducer, { items: [] }, (initial) => {
+    const saved = localStorage.getItem('snow_cart');
+    return saved ? { items: JSON.parse(saved) } : initial;
+  });
 
-  const addItem = (product) => dispatch({ type: 'ADD_ITEM', payload: product });
+  useEffect(() => {
+    localStorage.setItem('snow_cart', JSON.stringify(state.items));
+  }, [state.items]);
+
+  const addToCart = (product) => dispatch({ type: 'ADD_TO_CART', payload: product });
   const removeItem = (id) => dispatch({ type: 'REMOVE_ITEM', payload: id });
   const updateQty = (id, qty) => dispatch({ type: 'UPDATE_QTY', payload: { id, qty } });
   const clearCart = () => dispatch({ type: 'CLEAR_CART' });
@@ -44,7 +51,16 @@ export function CartProvider({ children }) {
   const totalPrice = state.items.reduce((sum, i) => sum + i.price * i.qty, 0);
 
   return (
-    <CartContext.Provider value={{ items: state.items, addItem, removeItem, updateQty, clearCart, totalItems, totalPrice }}>
+    <CartContext.Provider value={{ 
+      items: state.items, 
+      addToCart, 
+      addItem: addToCart, // <--- THIS FIXES THE "addItem is not a function" ERROR
+      removeItem, 
+      updateQty, 
+      clearCart, 
+      totalItems, 
+      totalPrice 
+    }}>
       {children}
     </CartContext.Provider>
   );

@@ -3,10 +3,12 @@ import './Reviews.css';
 
 export default function Reviews({ productId }) {
   const storageKey = `reviews_${productId}`;
+
   const [reviews, setReviews] = useState(() => {
     try { return JSON.parse(localStorage.getItem(storageKey)) || []; }
     catch { return []; }
   });
+
   const [name, setName] = useState('');
   const [comment, setComment] = useState('');
   const [rating, setRating] = useState(0);
@@ -50,6 +52,7 @@ export default function Reviews({ productId }) {
           </div>
         )}
       </div>
+
       <div className="review-form">
         <h3 className="form-title">Write a Review</h3>
         <div className="star-picker">
@@ -69,6 +72,7 @@ export default function Reviews({ productId }) {
           {submitted ? '✓ Review Submitted!' : 'Submit Review'}
         </button>
       </div>
+
       {reviews.length === 0 ? (
         <p className="no-reviews">No reviews yet — be the first!</p>
       ) : (

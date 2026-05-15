@@ -1,0 +1,428 @@
+/* Container - The Side Panel */
+.sa-side-drawer {
+    position: fixed;
+    top: 0;
+    right: -420px;
+    width: 400px;
+    height: 100vh;
+    background: #ffffff;
+    z-index: 10001;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+    box-shadow: -10px 0 50px rgba(0,0,0,0.15);
+    font-family: 'Inter', sans-serif;
+}
+
+.sa-side-drawer.open { right: 0; }
+
+/* Header */
+.sa-drawer-header {
+    padding: 24px;
+    background: #000;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sa-header-user { display: flex; align-items: center; gap: 12px; }
+.sa-online-dot { width: 8px; height: 8px; background: #4ade80; border-radius: 50%; display: inline-block; margin-right: 5px; }
+
+/* Scrollable Message Area - ONLY THIS SCROLLS */
+.sa-messages-area {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    background: #f8f9fa;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    scrollbar-width: thin;
+}
+
+/* Chat Bubbles */
+.sa-bubble {
+    max-width: 85%;
+    padding: 14px 18px;
+    border-radius: 20px;
+    font-size: 14px;
+    line-height: 1.5;
+    position: relative;
+}
+
+.bot .sa-bubble { background: #fff; color: #111; border-bottom-left-radius: 4px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+.user .sa-bubble { background: #000; color: #fff; border-bottom-right-radius: 4px; align-self: flex-end; }
+
+/* The "Style" Card - More Realistic */
+.sa-outfit-card {
+    margin-top: 12px;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.sa-outfit-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    background: #eee;
+}
+
+.sa-outfit-grid img { width: 100%; height: 180px; object-fit: cover; background: #fff; }
+
+.sa-add-full-btn {
+    width: 100%;
+    padding: 15px;
+    background: #000;
+    color: #fff;
+    border: none;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.sa-add-full-btn:hover { background: #333; }
+
+/* Input Row */
+.sa-drawer-input-area {
+    padding: 20px;
+    background: #fff;
+    border-top: 1px solid #eee;
+    display: flex;
+    gap: 10px;
+}
+
+.sa-input-field {
+    flex: 1;
+    padding: 12px 18px;
+    border: 1px solid #ddd;
+    border-radius: 25px;
+    outline: none;
+}
+
+.sa-send-btn {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: #000;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+/* FAB Button */
+.sa-fab-trigger {
+    position: fixed;
+    bottom: 100px;
+    right: 25px;
+    background: #000;
+    color: #fff;
+    border: none;
+    padding: 14px 24px;
+    border-radius: 40px;
+    font-weight: 800;
+    cursor: pointer;
+    z-index: 999;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Side Drawer */
+.sa-side-drawer {
+    position: fixed;
+    top: 0;
+    right: -420px;
+    width: 400px;
+    height: 100vh;
+    background: #fff;
+    z-index: 10000;
+    transition: 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+    display: flex;
+    flex-direction: column;
+}
+
+.sa-side-drawer.open { right: 0; }
+
+.sa-drawer-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(4px);
+    z-index: 9999;
+}
+
+/* Header */
+.sa-drawer-header {
+    background: #000;
+    color: #fff;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sa-status-dot { width: 10px; height: 10px; background: #2ecc71; border-radius: 50%; margin-right: 10px; display: inline-block; }
+
+/* Scrollable area */
+.sa-messages-area {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    background: #fdfdfd;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Bubbles */
+.sa-bubble {
+    padding: 12px 16px;
+    border-radius: 18px;
+    font-size: 14px;
+    max-width: 85%;
+    line-height: 1.5;
+}
+.bot .sa-bubble { background: #eee; border-bottom-left-radius: 2px; }
+.user .sa-bubble { background: #000; color: #fff; align-self: flex-end; border-bottom-right-radius: 2px; }
+
+/* Outfit Box */
+.sa-outfit-container {
+    margin-top: 10px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    overflow: hidden;
+}
+.sa-outfit-previews { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+.sa-outfit-previews img { width: 100%; height: 150px; object-fit: cover; }
+
+.sa-confirm-btn {
+    width: 100%;
+    padding: 15px;
+    background: #000;
+    color: #fff;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Input Area */
+.sa-input-container {
+    padding: 20px;
+    border-top: 1px solid #eee;
+    display: flex;
+    gap: 10px;
+}
+.sa-input-container input {
+    flex: 1;
+    padding: 12px;
+    border-radius: 20px;
+    border: 1px solid #ddd;
+    outline: none;
+}
+/* Sidebar Setup */
+.sa-drawer {
+    position: fixed;
+    top: 0;
+    right: -420px;
+    width: 400px;
+    height: 100vh;
+    background: #fff;
+    z-index: 10001;
+    transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+    box-shadow: -15px 0 50px rgba(0,0,0,0.1);
+}
+.sa-drawer.open { right: 0; }
+
+/* Header Branding */
+.sa-head {
+    padding: 20px;
+    background: linear-gradient(135deg, #000, #333);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.sa-pfp { width: 40px; height: 40px; background: #fff; color: #000; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; }
+
+/* Chat Bubbles */
+.sa-chat-body { flex: 1; overflow-y: auto; padding: 20px; background: #fdfdfd; }
+.sa-bubble { padding: 12px 18px; border-radius: 20px; font-size: 14px; position: relative; transition: 0.3s; }
+
+/* User Color Logic */
+.sa-row.user.female .sa-bubble { background: #ff7eb9; color: white; } /* Pink for girls */
+.sa-row.user.male .sa-bubble { background: #3b82f6; color: white; }   /* Blue for boys */
+.sa-row.user.neutral .sa-bubble { background: #000; color: white; }
+
+/* Dynamic Chips (Options) */
+.sa-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.sa-chips button {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    padding: 8px 14px;
+    border-radius: 50px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.sa-chips button:hover { background: #000; color: #fff; border-color: #000; transform: translateY(-2px); }
+
+/* Outfit Box Graphics */
+.sa-outfit-card { margin-top: 15px; border-radius: 15px; overflow: hidden; border: 1px solid #eee; background: #fff; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+.sa-grid { display: grid; grid-template-columns: 1fr 1fr; background: #fafafa; }
+.sa-grid img { width: 100%; height: 160px; object-fit: cover; }
+.sa-confirm { width: 100%; padding: 14px; border: none; background: #000; color: #fff; font-weight: bold; cursor: pointer; }
+
+/* Typing Indicator */
+.sa-typing { padding: 10px; display: flex; gap: 4px; }
+.sa-typing span { width: 6px; height: 6px; background: #ccc; border-radius: 50%; animation: bounce 1.4s infinite; }
+.sa-typing span:nth-child(2) { animation-delay: 0.2s; }
+.sa-typing span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes bounce { 0%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-6px); } }
+/* Sidebar Setup */
+.sa-drawer {
+    position: fixed;
+    top: 0;
+    right: -420px;
+    width: 400px;
+    height: 100vh;
+    background: #ffffff;
+    z-index: 10001;
+    transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+    box-shadow: -15px 0 50px rgba(0,0,0,0.1);
+}
+.sa-drawer.open { right: 0; }
+
+.sa-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.3);
+    backdrop-filter: blur(4px);
+    z-index: 10000;
+}
+
+/* Header */
+.sa-head {
+    padding: 20px;
+    background: #000;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.sa-head-info { display: flex; align-items: center; gap: 12px; }
+.sa-pfp { 
+    width: 45px; height: 45px; background: linear-gradient(45deg, #ff00cc, #3333ff); 
+    border-radius: 50%; display: flex; align-items: center; justify-content: center; 
+    font-weight: bold; font-size: 10px; color: white;
+}
+.sa-online-status { font-size: 11px; color: #4ade80; margin: 0; }
+
+/* Chat Bubbles */
+.sa-chat-body { flex: 1; overflow-y: auto; padding: 20px; background: #f8f9fa; display: flex; flex-direction: column; gap: 15px; }
+.sa-row { display: flex; flex-direction: column; }
+.sa-row.user { align-items: flex-end; }
+.sa-row.bot { align-items: flex-start; }
+
+.sa-bubble { padding: 12px 18px; border-radius: 20px; font-size: 14px; max-width: 85%; }
+.bot .sa-bubble { background: #ffffff; color: #111; box-shadow: 0 4px 10px rgba(0,0,0,0.03); }
+
+/* COLORFUL INTERACTION */
+.user.female .sa-bubble { background: linear-gradient(135deg, #ff7eb9, #ff00cc); color: white; }
+.user.male .sa-bubble { background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; }
+.user.neutral .sa-bubble { background: #000; color: white; }
+
+/* Chips (Buttons) */
+.sa-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.sa-chip-btn {
+    background: #fff;
+    border: 1.5px solid #eee;
+    padding: 7px 15px;
+    border-radius: 50px;
+    font-size: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.2s;
+}
+.sa-chip-btn:hover { background: #000; color: #fff; border-color: #000; }
+
+/* Input Bar */
+.sa-footer { padding: 20px; border-top: 1px solid #eee; background: white; }
+.sa-input-bar { display: flex; gap: 10px; background: #f1f1f1; padding: 5px; border-radius: 30px; }
+.sa-input-bar input { flex: 1; border: none; background: none; padding: 10px 15px; outline: none; }
+.sa-send { background: #000; color: #fff; border: none; padding: 8px 15px; border-radius: 25px; cursor: pointer; }
+
+/* Styling Button (FAB) */
+.sa-fab-main {
+    position: fixed;
+    bottom: 110px;
+    right: 25px;
+    background: #000;
+    color: #fff;
+    padding: 12px 25px;
+    border-radius: 50px;
+    border: none;
+    font-weight: bold;
+    z-index: 999;
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+/* Typing Animation */
+.sa-typing span {
+    height: 6px; width: 6px; background: #bbb; border-radius: 50%; display: inline-block;
+    margin: 0 2px; animation: bounce 1.3s infinite;
+}
+.sa-typing span:nth-child(2) { animation-delay: 0.2s; }
+.sa-typing span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes bounce { 0%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-6px); } }
+.sa-mini-results {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.sa-mini-item {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #eee;
+}
+
+.sa-mini-item img {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+}
+
+.sa-mini-info {
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-size: 11px;
+}
+
+.sa-mini-info button {
+    background: #000;
+    color: #fff;
+    border: none;
+    padding: 4px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.sa-mini-info button:hover {
+    background: #333;
+}
