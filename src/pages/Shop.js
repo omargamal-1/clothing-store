@@ -126,7 +126,16 @@ export default function Shop() {
           </button>
         ))}
       </div>
-
+{/* Search Input */}
+<div className="shop-search">
+  <input
+    type="text"
+    placeholder="Search products..."
+    value={searchQuery}
+    onChange={(e) => setSearchQuery(e.target.value)}
+    className="shop-search-input"
+  />
+</div>
       {/* Category filter */}
       <div className="shop-filters">
         {categories.map(cat => (
