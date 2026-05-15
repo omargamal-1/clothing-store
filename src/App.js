@@ -1,3 +1,4 @@
+import StyleAssistant from './components/StyleAssistant';
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { CartProvider } from './context/CartContext';
@@ -32,6 +33,7 @@ function App() {
         </Routes>
         <Footer />
         <SpinWheel />
+        <StyleAssistant />
       </BrowserRouter>
       </WishlistProvider>
     </CartProvider>
