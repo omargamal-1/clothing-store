@@ -63,10 +63,9 @@ export default function Navbar() {
           <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link>
           <Link to="/shop" onClick={() => setMenuOpen(false)}>Shop</Link>
           <Link to="/cart" onClick={() => setMenuOpen(false)}>Cart</Link>
-<<<<<<< HEAD
+
           <Link to="/order-tracking">Track Order</Link>
-=======
->>>>>>> f4bde56a0471a764e82ba26d8c3bccd5b5edc033
+
           <Link to="/wishlist">Wishlist ❤️</Link>
         </div>
       )}
