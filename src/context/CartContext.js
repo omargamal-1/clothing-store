@@ -4,7 +4,6 @@ const CartContext = createContext();
 
 const cartReducer = (state, action) => {
   switch (action.type) {
-    // FIXED: Changed case name to match the function call
     case 'ADD_TO_CART': {
       const existing = state.items.find(i => i.id === action.payload.id);
       if (existing) {
@@ -34,13 +33,11 @@ const cartReducer = (state, action) => {
 };
 
 export function CartProvider({ children }) {
-  // Initialize state from LocalStorage so the cart isn't empty on refresh
   const [state, dispatch] = useReducer(cartReducer, { items: [] }, (initial) => {
     const saved = localStorage.getItem('snow_cart');
     return saved ? { items: JSON.parse(saved) } : initial;
   });
 
-  // Save to LocalStorage whenever state.items changes
   useEffect(() => {
     localStorage.setItem('snow_cart', JSON.stringify(state.items));
   }, [state.items]);
@@ -57,6 +54,7 @@ export function CartProvider({ children }) {
     <CartContext.Provider value={{ 
       items: state.items, 
       addToCart, 
+      addItem: addToCart, // <--- THIS FIXES THE "addItem is not a function" ERROR
       removeItem, 
       updateQty, 
       clearCart, 
